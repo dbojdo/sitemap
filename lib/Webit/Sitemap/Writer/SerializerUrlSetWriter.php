@@ -46,6 +46,7 @@ class SerializerUrlSetWriter implements UrlSetWriterInterface
     	    $file = $this->generateTmpFile();
     	}
     	
+    	$xmlString = ('<?xml version="1.0" encoding="UTF-8"?>'."\n" . $xmlString);
     	file_put_contents($file->getPathname(), $xmlString);
     	
     	return $file;
