@@ -13,6 +13,7 @@ class UrlSet {
     /**
      * 
      * @var array
+     * @JMS\Exclude
      */
     private static $versionNs = array(
     	self::VERSION_09 => 'http://www.sitemaps.org/schemas/sitemap/0.9'
@@ -28,7 +29,7 @@ class UrlSet {
     /**
      * 
      * @var string
-     * @JMS\@XmlAttribute
+     * @JMS\XmlAttribute
      * @JMS\Type("string")
      */
     protected $xmlns;

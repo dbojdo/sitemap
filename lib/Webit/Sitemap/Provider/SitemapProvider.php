@@ -1,5 +1,5 @@
 <?php
-namespace Webit\Sitemap\Generator;
+namespace Webit\Sitemap\Provider;
 
 use Webit\Sitemap\Exposer\UrlExposerInterface;
 use Webit\Sitemap\Writer\UrlSetWriterInterface;
@@ -41,7 +41,7 @@ class SitemapProvider implements SitemapProviderInterface {
      * @return \SplFileInfo
      */
     public function getSitemap($forceGeneration = false) {
-        if($this->needsGenerate($forceGeneratrion)) {
+        if($this->needsGenerate($forceGeneration)) {
             $urlSet = $this->exposer->getUrlSet();
             $this->writer->writeUrlSet($urlSet, new \SplFileInfo($this->sitemapFile));
         }
@@ -54,7 +54,7 @@ class SitemapProvider implements SitemapProviderInterface {
             return true;
         }
         
-        $ctime = new \DateTime($this->sitemapFile->getMTime());
+        $ctime = \DateTime::createFromFormat('U', $this->sitemapFile->getMTime());
         $expirationTime = $ctime->add(new \DateInterval('P'.$this->interval .'D'));
         
         return new \DateTime() > $expirationTime;
