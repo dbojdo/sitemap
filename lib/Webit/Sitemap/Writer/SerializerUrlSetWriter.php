@@ -45,6 +45,8 @@ class SerializerUrlSetWriter implements UrlSetWriterInterface
     	if(empty($file)) {
     	    $file = $this->generateTmpFile();
     	}
+    	// FIXME: @see https://github.com/schmittjoh/JMSSerializerBundle/pull/132
+    	$xmlString = preg_replace(array('/\>\<\!\[CDATA\[/s','/\]\]\>\</'), array('>','<'), $xmlString);
     	
     	file_put_contents($file->getPathname(), $xmlString);
     	

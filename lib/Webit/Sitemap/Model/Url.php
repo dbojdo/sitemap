@@ -23,7 +23,7 @@ class Url
     /**
      *
      * @var string
-     * @JMS\XmlAttribute
+     * 
      * @JMS\SerializedName("loc")
      * @JMS\Type("string")
      */
@@ -32,7 +32,6 @@ class Url
     /**
      *
      * @var \DateTime
-     * @JMS\XmlAttribute
      * @JMS\SerializedName("lastmod")
      * @JMS\Type("DateTime")
      */
@@ -41,7 +40,6 @@ class Url
     /**
      *
      * @var string
-     * @JMS\XmlAttribute
      * @JMS\SerializedName("changefreq")
      * @JMS\Type("string")
      */
@@ -50,7 +48,6 @@ class Url
     /**
      *
      * @var float
-     * @JMS\XmlAttribute
      * @JMS\SerializedName("priority")
      * @JMS\Type("float")
      */
@@ -126,15 +123,5 @@ class Url
     public function setPriority($priority)
     {
         $this->priority = $priority;
-    }
-    
-    public function preSerialize() {
-        if(empty($this->lastModified)) {
-            $this->lastModified = new \DateTime();
-        }
-        
-        if(empty($this->changeFrequency)) {
-            $this->changeFrequency = self::FREQ_WEEKLY;
-        }
     }
 }
