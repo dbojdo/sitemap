@@ -1,0 +1,27 @@
+{
+	"name" : "webit/sitemap",
+	"description" : "Web-IT Sitemap Lib",
+	"type" : "library",
+	"authors" : [{
+			"name" : "Web-IT",
+			"homepage" : "http://www.web-it.eu"
+		}
+	],
+	"keywords" : [
+		"web-it"
+	],
+	"homepage" : "http://www.web-it.eu",
+	"license" : [
+		"Web-IT"
+	],
+	"require" : {
+		"php" : ">=5.3.2",
+		"jms/serializer" : "dev-master"
+	},
+	"autoload" : {
+		"psr-0" : {
+			"Webit\\Sitemap" : "lib"
+		}
+	},
+	"minimum-stability" : "dev"
+}
