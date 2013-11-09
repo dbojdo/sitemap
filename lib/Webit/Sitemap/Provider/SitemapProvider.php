@@ -42,6 +42,10 @@ class SitemapProvider implements SitemapProviderInterface {
      */
     public function getSitemap($forceGeneration = false) {
         if($this->needsGenerate($forceGeneration)) {
+        	if(is_dir($this->sitemapFile->getPath()) == false) {
+        		@mkdir($this->sitemapFile->getPath(), 0755, true);
+        	}
+        	
             $urlSet = $this->exposer->getUrlSet();
             $this->writer->writeUrlSet($urlSet, new \SplFileInfo($this->sitemapFile));
         }
