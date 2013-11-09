@@ -33,7 +33,7 @@ class Url
      *
      * @var \DateTime
      * @JMS\SerializedName("lastmod")
-     * @JMS\Type("DateTime")
+     * @JMS\Type("DateTime<c>")
      */
     protected $lastModified;
 
