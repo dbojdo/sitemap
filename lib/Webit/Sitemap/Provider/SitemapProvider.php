@@ -29,11 +29,11 @@ class SitemapProvider implements SitemapProviderInterface {
      */
     private $sitemapFile;
     
-    public function __construct(UrlExposerInterface $exposer, UrlSetWriterInterface $writer, $interval, $webRoot, $sitemapFilename = 'sitemap.xml') {
+    public function __construct(UrlExposerInterface $exposer, UrlSetWriterInterface $writer, $interval, $targetDir, $sitemapFilename = 'sitemap.xml') {
         $this->exposer = $exposer;
         $this->writer = $writer;
         $this->interval = $interval;
-        $this->sitemapFile = new \SplFileInfo($webRoot .'/'.$sitemapFilename);
+        $this->sitemapFile = new \SplFileInfo($targetDir .'/'.$sitemapFilename);
     }
     
     /**
@@ -42,6 +42,10 @@ class SitemapProvider implements SitemapProviderInterface {
      */
     public function getSitemap($forceGeneration = false) {
         if($this->needsGenerate($forceGeneration)) {
+        	if(is_dir($this->sitemapFile->getPath()) == false) {
+        		@mkdir($this->sitemapFile->getPath(), 0755, true);
+        	}
+        	
             $urlSet = $this->exposer->getUrlSet();
             $this->writer->writeUrlSet($urlSet, new \SplFileInfo($this->sitemapFile));
         }
