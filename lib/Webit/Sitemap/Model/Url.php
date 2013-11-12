@@ -2,6 +2,7 @@
 namespace Webit\Sitemap\Model;
 
 use JMS\Serializer\Annotation as JMS;
+use JMS\Serializer\EventDispatcher\PreSerializeEvent;
 
 /**
  * 
