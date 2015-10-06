@@ -1,9 +1,10 @@
 <?php
 namespace Webit\Sitemap\Exposer;
 
-use Webit\Sitemap\Model\UrlSet;
+use Webit\Sitemap\UrlSet;
 
-interface UrlExposerInterface {
+interface UrlExposerInterface
+{
     /**
      * @return UrlSet
      */

@@ -1,7 +1,7 @@
 <?php
 namespace Webit\Sitemap\Writer;
 
-use Webit\Sitemap\Model\UrlSet;
+use Webit\Sitemap\UrlSet;
 use JMS\Serializer\SerializerInterface;
 
 class SerializerUrlSetWriter implements UrlSetWriterInterface
@@ -18,7 +18,8 @@ class SerializerUrlSetWriter implements UrlSetWriterInterface
      */
     protected $tmpDir;
     
-    public function __construct(SerializerInterface $serializer, $tmpDir) {
+    public function __construct(SerializerInterface $serializer, $tmpDir)
+    {
         $this->serializer = $serializer;
         $this->setTmpDir($tmpDir);
     }
@@ -27,28 +28,27 @@ class SerializerUrlSetWriter implements UrlSetWriterInterface
      * 
      * @param string $tmpDir
      */
-    private function setTmpDir($tmpDir) {
-        if(is_dir($tmpDir) == false) {
+    private function setTmpDir($tmpDir)
+    {
+        if (is_dir($tmpDir) == false) {
             @mkdir($tmpDir, 0755, true);
         }
         $this->tmpDir = $tmpDir;
     }
-    
+
     /**
      *
      * @param UrlSet $urlSet
+     * @param \SplFileInfo $file
      * @return \SplFileInfo
      */
-    public function writeUrlSet(UrlSet $urlSet,\SplFileInfo $file = null)
+    public function writeUrlSet(UrlSet $urlSet, \SplFileInfo $file = null)
     {
-    	$xmlString = $this->serializer->serialize($urlSet, 'xml');
-    	if(empty($file)) {
+    	if (empty($file)) {
     	    $file = $this->generateTmpFile();
     	}
-    	// FIXME: @see https://github.com/schmittjoh/JMSSerializerBundle/pull/132
-    	$xmlString = preg_replace(array('/\>\<\!\[CDATA\[/s','/\]\]\>\</'), array('>','<'), $xmlString);
     	
-    	file_put_contents($file->getPathname(), $xmlString);
+    	file_put_contents($file->getPathname(), $this->serializer->serialize($urlSet, 'xml'));
     	
     	return $file;
     }
@@ -58,7 +58,7 @@ class SerializerUrlSetWriter implements UrlSetWriterInterface
      * @return \SplFileInfo
      */
     private function generateTmpFile() {
-        $tmpFile = md5(time().mt_rand(0,10000)).'.xml';
-        return new \SplFileInfo($tmpDir.'/'.$tmpFile);
+        $tmpFile = md5(time() . mt_rand(0, 10000)) . '.xml';
+        return new \SplFileInfo($this->tmpDir . '/' . $tmpFile);
     }
 }

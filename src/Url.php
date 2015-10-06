@@ -1,11 +1,16 @@
 <?php
-namespace Webit\Sitemap\Model;
+/**
+ * Url.php
+ *
+ * @author dbojdo - Daniel Bojdo <daniel.bojdo@8x8.com>
+ * Created on 10 06, 2015, 16:45
+ * Copyright (C) 8x8
+ */
 
-use JMS\Serializer\Annotation as JMS;
-use JMS\Serializer\EventDispatcher\PreSerializeEvent;
+namespace Webit\Sitemap;
 
 /**
- * 
+ *
  * @author dbojdo
  * @JMS\XmlRoot("url")
  */
@@ -20,13 +25,14 @@ class Url
     const FREQ_MONTHLY = 'monthly';
     const FREQ_YEARLY  = 'yearly';
     const FREQ_NEVER   = 'never';
-    
+
     /**
      *
      * @var string
-     * 
+     *
      * @JMS\SerializedName("loc")
      * @JMS\Type("string")
+     * @JMS\XmlElement(cdata=false)
      */
     protected $location;
 
@@ -35,6 +41,7 @@ class Url
      * @var \DateTime
      * @JMS\SerializedName("lastmod")
      * @JMS\Type("DateTime<c>")
+     * @JMS\XmlElement(cdata=false)
      */
     protected $lastModified;
 
@@ -43,6 +50,7 @@ class Url
      * @var string
      * @JMS\SerializedName("changefreq")
      * @JMS\Type("string")
+     * @JMS\XmlElement(cdata=false)
      */
     protected $changeFrequency;
 
@@ -51,8 +59,39 @@ class Url
      * @var float
      * @JMS\SerializedName("priority")
      * @JMS\Type("float")
+     * @JMS\XmlElement(cdata=false)
      */
     protected $priority = self::DEFAULT_PRIORITY;
+
+    /**
+     * @param string|null $location
+     * @param \DateTime|null $lastModified
+     * @param string|null $changeFrequency
+     * @param float|null $priority
+     */
+    public function __construct($location = null, \DateTime $lastModified = null, $changeFrequency = null, $priority = null)
+    {
+        $this->setLocation($location);
+        if ($lastModified) {
+            $this->setLastModified($lastModified);
+        }
+
+        $this->setChangeFrequency($changeFrequency);
+        $this->setPriority($priority);
+
+    }
+
+    /**
+     * @param $location
+     * @param \DateTime $lastModified
+     * @param string|null $changeFrequency
+     * @param float|null $priority
+     * @return \Webit\Sitemap\Url
+     */
+    public static function create($location, \DateTime $lastModified = null, $changeFrequency = null, $priority = null)
+    {
+        return new static($location, $lastModified, $changeFrequency, $priority);
+    }
 
     /**
      *
@@ -83,7 +122,7 @@ class Url
 
     /**
      *
-     * @param \DateTime $lastModified            
+     * @param \DateTime $lastModified
      */
     public function setLastModified(\DateTime $lastModified)
     {
@@ -123,6 +162,6 @@ class Url
      */
     public function setPriority($priority)
     {
-        $this->priority = $priority;
+        $this->priority = (float) $priority;
     }
 }

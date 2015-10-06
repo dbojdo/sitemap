@@ -1,7 +1,7 @@
 <?php
 namespace Webit\Sitemap\Provider;
 
-use Webit\Sitemap\Exposer\UrlExposerInterface;
-interface SitemapProviderInterface {
+interface SitemapProviderInterface
+{
     public function getSitemap($forceGeneration = false);
 }

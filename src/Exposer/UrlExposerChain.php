@@ -1,11 +1,12 @@
 <?php
 namespace Webit\Sitemap\Exposer;
 
-use Webit\Sitemap\Model\UrlSet;
+use Webit\Sitemap\UrlSet;
 
-class UrlExposerChain implements UrlExposerChainInterface {
+class UrlExposerChain implements UrlExposerChainInterface
+{
+
     /**
-     * 
      * @var array
      */
     protected $exposers = array();
@@ -13,14 +14,15 @@ class UrlExposerChain implements UrlExposerChainInterface {
     /**
      * @return UrlSet
      */
-    public function getUrlSet() {
-        if(count($this->exposers) == 0) {
+    public function getUrlSet()
+    {
+        if (count($this->exposers) == 0) {
             return new UrlSet();
         }
         
         $urlSet = null;
         foreach($this->exposers as $exposer) {
-            if($urlSet == null) {
+            if ($urlSet == null) {
                 $urlSet = $exposer->getUrlSet();
             } else {
                 $urlSet->merge($exposer->getUrlSet());
@@ -34,7 +36,8 @@ class UrlExposerChain implements UrlExposerChainInterface {
      * 
      * @param UrlExposerInterface $exposer
      */
-    public function registerExposer(UrlExposerInterface $exposer) {
+    public function registerExposer(UrlExposerInterface $exposer)
+    {
         $this->exposers[] = $exposer;
     }
 }
