@@ -25,6 +25,7 @@ namespace MyProject;
 
 use Webit\Sitemap\Exposer\UrlExposerInterface;
 use Webit\Sitemap\UrlSet;
+use Webit\Sitemap\Url;
 
 class MyExposer implements UrlExposerInterface
 {
@@ -35,9 +36,9 @@ class MyExposer implements UrlExposerInterface
     {
         $urlSet = new UrlSet();
         
-        $urlSet->addUrl(Url::create('http://my-project.domain/url-1));
-        $urlSet->addUrl(Url::create('http://my-project.domain/url-2));
-        $urlSet->addUrl(Url::create('http://my-project.domain/url-3));
+        $urlSet->addUrl(Url::create('http://my-project.domain/url-1'));
+        $urlSet->addUrl(Url::create('http://my-project.domain/url-2'));
+        $urlSet->addUrl(Url::create('http://my-project.domain/url-3'));
         // add urls you need
          
         return $urlSet;
