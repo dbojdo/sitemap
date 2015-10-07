@@ -33,8 +33,8 @@ class SitemapProvider implements SitemapProviderInterface
     /**
      * @param UrlExposerInterface $exposer
      * @param UrlSetWriterInterface $writer
-     * @param $interval
-     * @param $targetDir
+     * @param int $interval number of days the sitemap is valid
+     * @param string $targetDir
      * @param string $sitemapFilename
      */
     public function __construct(
