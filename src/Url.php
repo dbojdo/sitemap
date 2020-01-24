@@ -1,67 +1,55 @@
 <?php
-/**
- * Url.php
- *
- * @author dbojdo - Daniel Bojdo <daniel.bojdo@8x8.com>
- * Created on 10 06, 2015, 16:45
- * Copyright (C) 8x8
- */
 
 namespace Webit\Sitemap;
 
+use JMS\Serializer\Annotation as JMS;
+
 /**
- *
- * @author dbojdo
  * @JMS\XmlRoot("url")
  */
-class Url
+final class Url
 {
     const DEFAULT_PRIORITY = 0.5;
 
-    const FREQ_ALWAYS  = 'always';
-    const FREQ_HOURLY  = 'hourly';
-    const FREQ_DAILY   = 'daily';
-    const FREQ_WEEKLY  = 'weekly';
+    const FREQ_ALWAYS = 'always';
+    const FREQ_HOURLY = 'hourly';
+    const FREQ_DAILY = 'daily';
+    const FREQ_WEEKLY = 'weekly';
     const FREQ_MONTHLY = 'monthly';
-    const FREQ_YEARLY  = 'yearly';
-    const FREQ_NEVER   = 'never';
+    const FREQ_YEARLY = 'yearly';
+    const FREQ_NEVER = 'never';
 
     /**
-     *
      * @var string
-     *
      * @JMS\SerializedName("loc")
      * @JMS\Type("string")
      * @JMS\XmlElement(cdata=false)
      */
-    protected $location;
+    private $location;
 
     /**
-     *
      * @var \DateTime
      * @JMS\SerializedName("lastmod")
-     * @JMS\Type("DateTime<c>")
+     * @JMS\Type("DateTime<'c'>")
      * @JMS\XmlElement(cdata=false)
      */
-    protected $lastModified;
+    private $lastModified;
 
     /**
-     *
      * @var string
      * @JMS\SerializedName("changefreq")
      * @JMS\Type("string")
      * @JMS\XmlElement(cdata=false)
      */
-    protected $changeFrequency;
+    private $changeFrequency;
 
     /**
-     *
      * @var float
      * @JMS\SerializedName("priority")
      * @JMS\Type("float")
      * @JMS\XmlElement(cdata=false)
      */
-    protected $priority = self::DEFAULT_PRIORITY;
+    private $priority = self::DEFAULT_PRIORITY;
 
     /**
      * @param string|null $location
@@ -69,8 +57,12 @@ class Url
      * @param string|null $changeFrequency
      * @param float|null $priority
      */
-    public function __construct($location = null, \DateTime $lastModified = null, $changeFrequency = null, $priority = null)
-    {
+    public function __construct(
+        $location = null,
+        \DateTime $lastModified = null,
+        $changeFrequency = null,
+        $priority = null
+    ) {
         $this->setLocation($location);
         if ($lastModified) {
             $this->setLastModified($lastModified);
@@ -78,11 +70,10 @@ class Url
 
         $this->setChangeFrequency($changeFrequency);
         $this->setPriority($priority);
-
     }
 
     /**
-     * @param $location
+     * @param string $location
      * @param \DateTime $lastModified
      * @param string|null $changeFrequency
      * @param float|null $priority
@@ -94,7 +85,6 @@ class Url
     }
 
     /**
-     *
      * @return string
      */
     public function getLocation()
@@ -103,7 +93,6 @@ class Url
     }
 
     /**
-     *
      * @param string $location
      */
     public function setLocation($location)
@@ -112,7 +101,6 @@ class Url
     }
 
     /**
-     *
      * @return \DateTime
      */
     public function getLastModified()
@@ -121,7 +109,6 @@ class Url
     }
 
     /**
-     *
      * @param \DateTime $lastModified
      */
     public function setLastModified(\DateTime $lastModified)
@@ -130,7 +117,6 @@ class Url
     }
 
     /**
-     *
      * @return string
      */
     public function getChangeFrequency()
@@ -139,7 +125,6 @@ class Url
     }
 
     /**
-     *
      * @param string $changeFrequency
      */
     public function setChangeFrequency($changeFrequency)
@@ -148,7 +133,6 @@ class Url
     }
 
     /**
-     *
      * @return float
      */
     public function getPriority()
@@ -157,11 +141,10 @@ class Url
     }
 
     /**
-     *
      * @param float $priority
      */
     public function setPriority($priority)
     {
-        $this->priority = (float) $priority;
+        $this->priority = (float)$priority;
     }
 }

@@ -1,31 +1,31 @@
 <?php
-/**
- * UrlSet.php
- *
- * @author dbojdo - Daniel Bojdo <daniel.bojdo@8x8.com>
- * Created on 10 06, 2015, 16:47
- * Copyright (C) 8x8
- */
 
 namespace Webit\Sitemap;
+
 use JMS\Serializer\Annotation as JMS;
 
 /**
- *
- * @author dbojdo
  * @JMS\XmlRoot("urlset")
  */
-class UrlSet
+final class UrlSet
 {
     const VERSION_09 = '0.9';
 
     /**
      *
+     * @var string
+     * @JMS\XmlAttribute
+     * @JMS\Type("string")
+     * @JMS\SerializedName("xmlns")
+     */
+    private $xmlns;
+
+    /**
      * @var array
      * @JMS\Exclude
      */
     private static $versionNs = array(
-        self::VERSION_09 => 'http://www.sitemaps.org/schemas/sitemap/0.9'
+        self::VERSION_09 => 'http://www.sitemaps.org/schemas/sitemap/0.9',
     );
 
     /**
@@ -33,23 +33,15 @@ class UrlSet
      * @var string
      * @JMS\Exclude
      */
-    protected $version = self::VERSION_09;
+    private $version = self::VERSION_09;
 
     /**
      *
-     * @var string
-     * @JMS\XmlAttribute
-     * @JMS\Type("string")
-     */
-    protected $xmlns;
-
-    /**
-     *
-     * @var array<Url>
+     * @var Url[]
      * @JMS\XmlList(inline = true, entry = "url")
      * @JMS\Type("array<Webit\Sitemap\Url>")
      */
-    protected $urls = array();
+    private $urls = [];
 
     public function __construct($version = self::VERSION_09)
     {

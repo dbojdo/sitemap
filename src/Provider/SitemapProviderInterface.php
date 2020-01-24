@@ -1,4 +1,5 @@
 <?php
+
 namespace Webit\Sitemap\Provider;
 
 interface SitemapProviderInterface

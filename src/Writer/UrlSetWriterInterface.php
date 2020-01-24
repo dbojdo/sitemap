@@ -1,4 +1,5 @@
 <?php
+
 namespace Webit\Sitemap\Writer;
 
 use Webit\Sitemap\UrlSet;
@@ -6,10 +7,8 @@ use Webit\Sitemap\UrlSet;
 interface UrlSetWriterInterface
 {
     /**
-     *
      * @param UrlSet $urlSet
-     * @param \SplFileInfo|null $file
-     * @return \SplFileInfo
+     * @param \SplFileInfo $file
      */
-    public function writeUrlSet(UrlSet $urlSet, \SplFileInfo $file = null);
+    public function writeUrlSet(UrlSet $urlSet, \SplFileInfo $file);
 }

@@ -1,40 +1,33 @@
 <?php
+
 namespace Webit\Sitemap\Exposer;
 
 use Webit\Sitemap\UrlSet;
 
-class UrlExposerChain implements UrlExposerChainInterface
+final class UrlExposerChain implements UrlExposerChainInterface
 {
+    /** @var UrlExposerInterface[] */
+    private $exposers = [];
 
     /**
-     * @var array
-     */
-    protected $exposers = array();
-    
-    /**
-     * @return UrlSet
+     * @inheritDoc
      */
     public function getUrlSet()
     {
-        if (count($this->exposers) == 0) {
-            return new UrlSet();
+        $urlSet = new UrlSet();
+        if (!$this->exposers) {
+            return $urlSet;
         }
-        
-        $urlSet = null;
-        foreach($this->exposers as $exposer) {
-            if ($urlSet == null) {
-                $urlSet = $exposer->getUrlSet();
-            } else {
-                $urlSet->merge($exposer->getUrlSet());
-            }
+
+        foreach ($this->exposers as $exposer) {
+            $urlSet->merge($exposer->getUrlSet());
         }
-        
+
         return $urlSet;
     }
-    
+
     /**
-     * 
-     * @param UrlExposerInterface $exposer
+     * @inheritDoc
      */
     public function registerExposer(UrlExposerInterface $exposer)
     {

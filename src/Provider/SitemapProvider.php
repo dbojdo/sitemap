@@ -1,33 +1,22 @@
 <?php
+
 namespace Webit\Sitemap\Provider;
 
 use Webit\Sitemap\Exposer\UrlExposerInterface;
 use Webit\Sitemap\Writer\UrlSetWriterInterface;
 
-class SitemapProvider implements SitemapProviderInterface
+final class SitemapProvider implements SitemapProviderInterface
 {
-    /**
-     * 
-     * @var UrlExposerInterface
-     */
+    /** @var UrlExposerInterface */
     private $exposer;
-    
-    /**
-     * 
-     * @var UrlSetWriterInterface
-     */
+
+    /** @var UrlSetWriterInterface */
     private $writer;
-    
-    /**
-     * 
-     * @var int
-     */
+
+    /** @var int */
     private $interval;
-    
-    /**
-     * 
-     * @var \SplFileInfo
-     */
+
+    /** @var \SplFileInfo */
     private $sitemapFile;
 
     /**
@@ -49,34 +38,38 @@ class SitemapProvider implements SitemapProviderInterface
         $this->interval = $interval;
         $this->sitemapFile = new \SplFileInfo($targetDir . '/' . $sitemapFilename);
     }
-    
+
     /**
-     * 
-     * @return \SplFileInfo
+     * @inheritDoc
      */
     public function getSitemap($forceGeneration = false)
     {
-        if ($this->needsGenerate($forceGeneration)) {
-        	if (is_dir($this->sitemapFile->getPath()) == false) {
-        		@mkdir($this->sitemapFile->getPath(), 0755, true);
-        	}
-        	
-            $urlSet = $this->exposer->getUrlSet();
-            $this->writer->writeUrlSet($urlSet, new \SplFileInfo($this->sitemapFile));
+        if (!$this->needsGenerate($forceGeneration)) {
+            return $this->sitemapFile;
         }
-        
+
+        if (!is_dir($this->sitemapFile->getPath())) {
+            @mkdir($this->sitemapFile->getPath(), 0755, true);
+        }
+
+        $this->writer->writeUrlSet($this->exposer->getUrlSet(), $this->sitemapFile);
+
         return $this->sitemapFile;
     }
-    
+
+    /**
+     * @param bool $forceGeneration
+     * @return bool
+     */
     private function needsGenerate($forceGeneration)
     {
         if ($forceGeneration || $this->sitemapFile->isFile() == false) {
             return true;
         }
-        
+
         $cTime = \DateTime::createFromFormat('U', $this->sitemapFile->getMTime());
         $expirationTime = $cTime->add(new \DateInterval('P' . $this->interval . 'D'));
-        
+
         return new \DateTime() > $expirationTime;
     }
 }

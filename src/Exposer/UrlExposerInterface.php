@@ -1,4 +1,5 @@
 <?php
+
 namespace Webit\Sitemap\Exposer;
 
 use Webit\Sitemap\UrlSet;

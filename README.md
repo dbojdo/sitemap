@@ -9,8 +9,8 @@ This library provides components to generate ***sitemap.xml*** file according to
 ```json
 {
     "require": {
-        "php":              ">=5.3.2",
-        "webit/sitemap": "dev-master"
+        "php": ">=5.6.0",
+        "webit/sitemap": "^2.0.0"
     }
 }
 ```
